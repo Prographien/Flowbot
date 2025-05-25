@@ -1,0 +1,32 @@
+{
+  "name": "@chatbot-builder/react",
+  "version": "1.0.0",
+  "description": "React component for the chatbot builder platform",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.18",
+    "@types/react-dom": "^18.2.7",
+    "typescript": "^4.9.5"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "keywords": [
+    "react",
+    "chatbot",
+    "widget",
+    "no-code"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+} 

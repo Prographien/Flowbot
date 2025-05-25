@@ -1,0 +1,144 @@
+{
+  "name": "Lead Generation Bot",
+  "description": "A template for capturing and qualifying leads",
+  "category": "lead_generation",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "position": { "x": 250, "y": 50 },
+      "data": {
+        "label": "Start",
+        "content": "Hi there! I'd love to learn more about your needs and see how we can help. What brings you here today?"
+      }
+    },
+    {
+      "id": "interest_capture",
+      "type": "ai",
+      "position": { "x": 250, "y": 150 },
+      "data": {
+        "label": "Interest Capture",
+        "content": "Analyze the user's response and identify their primary interest or pain point.",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.5
+        }
+      }
+    },
+    {
+      "id": "collect_info",
+      "type": "message",
+      "position": { "x": 250, "y": 250 },
+      "data": {
+        "label": "Collect Info",
+        "content": "Great! To better assist you, could you please share your name and email address?"
+      }
+    },
+    {
+      "id": "validate_info",
+      "type": "ai",
+      "position": { "x": 250, "y": 350 },
+      "data": {
+        "label": "Validate Info",
+        "content": "Extract and validate name and email from user's response. Ask again if information is missing or invalid.",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.3
+        }
+      }
+    },
+    {
+      "id": "qualify_lead",
+      "type": "ai",
+      "position": { "x": 250, "y": 450 },
+      "data": {
+        "label": "Qualify Lead",
+        "content": "Based on the conversation, determine if this is a qualified lead and what their needs are.",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.5
+        }
+      }
+    },
+    {
+      "id": "schedule_call",
+      "type": "message",
+      "position": { "x": 100, "y": 550 },
+      "data": {
+        "label": "Schedule Call",
+        "content": "Would you like to schedule a call with one of our experts to discuss this further?"
+      }
+    },
+    {
+      "id": "send_resources",
+      "type": "message",
+      "position": { "x": 400, "y": 550 },
+      "data": {
+        "label": "Send Resources",
+        "content": "I'll send some relevant resources to your email. Our team will reach out to you soon with more information."
+      }
+    },
+    {
+      "id": "end_qualified",
+      "type": "end",
+      "position": { "x": 100, "y": 650 },
+      "data": {
+        "label": "End (Qualified)",
+        "content": "Thank you for your interest! We'll be in touch soon."
+      }
+    },
+    {
+      "id": "end_nurture",
+      "type": "end",
+      "position": { "x": 400, "y": 650 },
+      "data": {
+        "label": "End (Nurture)",
+        "content": "Thanks for chatting! Check your email for helpful resources."
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "start",
+      "target": "interest_capture"
+    },
+    {
+      "id": "e2",
+      "source": "interest_capture",
+      "target": "collect_info"
+    },
+    {
+      "id": "e3",
+      "source": "collect_info",
+      "target": "validate_info"
+    },
+    {
+      "id": "e4",
+      "source": "validate_info",
+      "target": "qualify_lead"
+    },
+    {
+      "id": "e5",
+      "source": "qualify_lead",
+      "target": "schedule_call",
+      "data": { "condition": "qualified" }
+    },
+    {
+      "id": "e6",
+      "source": "qualify_lead",
+      "target": "send_resources",
+      "data": { "condition": "nurture" }
+    },
+    {
+      "id": "e7",
+      "source": "schedule_call",
+      "target": "end_qualified"
+    },
+    {
+      "id": "e8",
+      "source": "send_resources",
+      "target": "end_nurture"
+    }
+  ]
+} 

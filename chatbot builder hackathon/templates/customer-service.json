@@ -1,0 +1,131 @@
+{
+  "name": "Customer Service Bot",
+  "description": "A template for handling common customer service inquiries",
+  "category": "customer_service",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "position": { "x": 250, "y": 50 },
+      "data": {
+        "label": "Start",
+        "content": "Hello! I'm here to help you with any customer service questions. How can I assist you today?"
+      }
+    },
+    {
+      "id": "intent_classifier",
+      "type": "ai",
+      "position": { "x": 250, "y": 150 },
+      "data": {
+        "label": "Intent Classifier",
+        "content": "Classify the user's intent into one of the following categories: order_status, returns, product_info, shipping, other",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.3
+        }
+      }
+    },
+    {
+      "id": "order_status",
+      "type": "ai",
+      "position": { "x": 50, "y": 250 },
+      "data": {
+        "label": "Order Status",
+        "content": "I can help you check your order status. Could you please provide your order number?",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7
+        }
+      }
+    },
+    {
+      "id": "returns",
+      "type": "ai",
+      "position": { "x": 250, "y": 250 },
+      "data": {
+        "label": "Returns",
+        "content": "I'll help you process a return. Please provide your order number and the reason for return.",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7
+        }
+      }
+    },
+    {
+      "id": "product_info",
+      "type": "ai",
+      "position": { "x": 450, "y": 250 },
+      "data": {
+        "label": "Product Information",
+        "content": "I can provide information about our products. What would you like to know?",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7
+        }
+      }
+    },
+    {
+      "id": "shipping",
+      "type": "ai",
+      "position": { "x": 650, "y": 250 },
+      "data": {
+        "label": "Shipping",
+        "content": "I can help with shipping-related questions. What specific information do you need?",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7
+        }
+      }
+    },
+    {
+      "id": "general_help",
+      "type": "ai",
+      "position": { "x": 850, "y": 250 },
+      "data": {
+        "label": "General Help",
+        "content": "I'll do my best to help you with your question. Please provide more details.",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7
+        }
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "start",
+      "target": "intent_classifier"
+    },
+    {
+      "id": "e2",
+      "source": "intent_classifier",
+      "target": "order_status",
+      "data": { "condition": "order_status" }
+    },
+    {
+      "id": "e3",
+      "source": "intent_classifier",
+      "target": "returns",
+      "data": { "condition": "returns" }
+    },
+    {
+      "id": "e4",
+      "source": "intent_classifier",
+      "target": "product_info",
+      "data": { "condition": "product_info" }
+    },
+    {
+      "id": "e5",
+      "source": "intent_classifier",
+      "target": "shipping",
+      "data": { "condition": "shipping" }
+    },
+    {
+      "id": "e6",
+      "source": "intent_classifier",
+      "target": "general_help",
+      "data": { "condition": "other" }
+    }
+  ]
+} 

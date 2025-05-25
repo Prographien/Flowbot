@@ -1,0 +1,158 @@
+{
+  "name": "FAQ Bot",
+  "description": "A template for answering frequently asked questions",
+  "category": "faq",
+  "nodes": [
+    {
+      "id": "start",
+      "type": "start",
+      "position": { "x": 250, "y": 50 },
+      "data": {
+        "label": "Start",
+        "content": "Hello! I'm here to help answer your questions. What would you like to know?"
+      }
+    },
+    {
+      "id": "topic_classifier",
+      "type": "ai",
+      "position": { "x": 250, "y": 150 },
+      "data": {
+        "label": "Topic Classifier",
+        "content": "Analyze the question and classify it into relevant FAQ categories.",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.3
+        }
+      }
+    },
+    {
+      "id": "search_faqs",
+      "type": "ai",
+      "position": { "x": 250, "y": 250 },
+      "data": {
+        "label": "Search FAQs",
+        "content": "Search through the FAQ database and find the most relevant answer.",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.5
+        }
+      }
+    },
+    {
+      "id": "answer_found",
+      "type": "condition",
+      "position": { "x": 250, "y": 350 },
+      "data": {
+        "label": "Answer Found?",
+        "content": "Check if a relevant answer was found in the FAQs."
+      }
+    },
+    {
+      "id": "provide_answer",
+      "type": "ai",
+      "position": { "x": 100, "y": 450 },
+      "data": {
+        "label": "Provide Answer",
+        "content": "Here's what I found that might help: {answer}",
+        "settings": {
+          "model": "gpt-3.5-turbo",
+          "temperature": 0.7
+        }
+      }
+    },
+    {
+      "id": "ask_followup",
+      "type": "message",
+      "position": { "x": 100, "y": 550 },
+      "data": {
+        "label": "Ask Follow-up",
+        "content": "Did this answer help you? Or do you have any other questions?"
+      }
+    },
+    {
+      "id": "no_answer",
+      "type": "message",
+      "position": { "x": 400, "y": 450 },
+      "data": {
+        "label": "No Answer",
+        "content": "I apologize, but I couldn't find a specific answer to your question. Would you like me to connect you with a support agent?"
+      }
+    },
+    {
+      "id": "transfer_agent",
+      "type": "message",
+      "position": { "x": 400, "y": 550 },
+      "data": {
+        "label": "Transfer to Agent",
+        "content": "I'll transfer you to a support agent who can better assist you. Please wait a moment."
+      }
+    },
+    {
+      "id": "end_success",
+      "type": "end",
+      "position": { "x": 100, "y": 650 },
+      "data": {
+        "label": "End (Success)",
+        "content": "I'm glad I could help! Feel free to ask if you have more questions."
+      }
+    },
+    {
+      "id": "end_transfer",
+      "type": "end",
+      "position": { "x": 400, "y": 650 },
+      "data": {
+        "label": "End (Transfer)",
+        "content": "An agent will be with you shortly. Thank you for your patience."
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e1",
+      "source": "start",
+      "target": "topic_classifier"
+    },
+    {
+      "id": "e2",
+      "source": "topic_classifier",
+      "target": "search_faqs"
+    },
+    {
+      "id": "e3",
+      "source": "search_faqs",
+      "target": "answer_found"
+    },
+    {
+      "id": "e4",
+      "source": "answer_found",
+      "target": "provide_answer",
+      "data": { "condition": "found" }
+    },
+    {
+      "id": "e5",
+      "source": "answer_found",
+      "target": "no_answer",
+      "data": { "condition": "not_found" }
+    },
+    {
+      "id": "e6",
+      "source": "provide_answer",
+      "target": "ask_followup"
+    },
+    {
+      "id": "e7",
+      "source": "ask_followup",
+      "target": "end_success"
+    },
+    {
+      "id": "e8",
+      "source": "no_answer",
+      "target": "transfer_agent"
+    },
+    {
+      "id": "e9",
+      "source": "transfer_agent",
+      "target": "end_transfer"
+    }
+  ]
+} 
